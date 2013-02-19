@@ -297,6 +297,7 @@ add_new_tcp(struct tcphdr * this_tcphdr, struct ip * this_iphdr)
   a_tcp->server.state = TCP_CLOSE;
   a_tcp->next_node = tolink;
   a_tcp->prev_node = 0;
+  a_tcp->ts = nids_last_pcap_header->ts.tv_sec;
   if (tolink)
     tolink->prev_node = a_tcp;
   tcp_stream_table[hash_index] = a_tcp;
@@ -765,11 +766,26 @@ process_tcp(u_char * data, int skblen)
     snd = &a_tcp->server;
   }
   if ((this_tcphdr->th_flags & TH_SYN)) {
-    if (from_client || a_tcp->client.state != TCP_SYN_SENT ||
+    if (from_client) {
+      // if timeout since previous
+      if (nids_params.tcp_flow_timeout > 0 &&
+        (a_tcp->ts + nids_params.tcp_flow_timeout < nids_last_pcap_header->ts.tv_sec)) {
+        if (!(this_tcphdr->th_flags & TH_ACK) &&
+          !(this_tcphdr->th_flags & TH_RST)) {
+          // cleanup previous
+          nids_free_tcp_stream(a_tcp);
+          // start new
+          add_new_tcp(this_tcphdr, this_iphdr);
+        }
+      }
+      return;
+    }
+    if (a_tcp->client.state != TCP_SYN_SENT ||
       a_tcp->server.state != TCP_CLOSE || !(this_tcphdr->th_flags & TH_ACK))
       return;
     if (a_tcp->client.seq != ntohl(this_tcphdr->th_ack))
       return;
+    a_tcp->ts = nids_last_pcap_header->ts.tv_sec;
     a_tcp->server.state = TCP_SYN_RECV;
     a_tcp->server.seq = ntohl(this_tcphdr->th_seq) + 1;
     a_tcp->server.first_data_seq = a_tcp->server.seq;
@@ -825,6 +841,7 @@ process_tcp(u_char * data, int skblen)
       if (ntohl(this_tcphdr->th_ack) == a_tcp->server.seq) {
 	a_tcp->client.state = TCP_ESTABLISHED;
 	a_tcp->client.ack_seq = ntohl(this_tcphdr->th_ack);
+        a_tcp->ts = nids_last_pcap_header->ts.tv_sec;
 	{
 	  struct proc_node *i;
 	  struct lurker_node *j;

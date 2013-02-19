@@ -106,6 +106,7 @@ struct tcp_stream
   int read;
   struct tcp_stream *next_free;
   void *user;
+  long ts;
 };
 
 struct nids_prm
@@ -131,6 +132,7 @@ struct nids_prm
   int queue_limit;
   int tcp_workarounds;
   pcap_t *pcap_desc;
+  int tcp_flow_timeout;
 };
 
 struct tcp_timeout

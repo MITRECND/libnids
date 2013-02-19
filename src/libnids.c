@@ -108,7 +108,8 @@ struct nids_prm nids_params = {
     0,				/* multiproc */
     20000,			/* queue_limit */
     0,				/* tcp_workarounds */
-    NULL			/* pcap_desc */
+    NULL,			/* pcap_desc */
+    0			        /* tcp_flow_timeout */
 };
 
 static int nids_ip_filter(struct ip *x, int len)
