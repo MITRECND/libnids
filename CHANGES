@@ -1,3 +1,6 @@
+v1.25 Feb 18 2013
+- added timeouts for tcp streams
+
 v1.24 Mar 14 2010
 - fixed another remotely triggerable NULL dereference in ip_fragment.c
 - unofficial patch that enables tracking of already established TCP connections
