@@ -1,6 +1,6 @@
 
                             ====================
-                                libnids-1.24
+                                libnids-1.25
                             ====================
 	Libnids uses efficient data structures (hash tables), so it imposes as 
 little overhead on packets processing as possible. However, in some cases,
