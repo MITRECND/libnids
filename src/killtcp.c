@@ -57,8 +57,7 @@ int raw_init()
 }
 #elif LIBNET_VER == 1
 #include <libnet.h>
-static libnet_ptag_t tcp_tag = LIBNET_PTAG_INITIALIZER,
-    ip_tag = LIBNET_PTAG_INITIALIZER;
+static libnet_ptag_t tcp_tag, ip_tag;
 static libnet_t *l = 0;
 int raw_init()
 {
@@ -70,7 +69,9 @@ int raw_init()
     if (!l) {
 	printf("%s\n", errbuf);
 	return 0;
-    } else
+    }
+    tcp_tag = LIBNET_PTAG_INITIALIZER;
+    ip_tag = LIBNET_PTAG_INITIALIZER;
 	return 1;
 }
 
