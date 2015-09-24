@@ -1,3 +1,7 @@
+v1.26 Sep 24 2015
+- Set default tcp_flow_timeout to 1 hour, which should cover most firewalls'
+and OS's TCP idle timeout
+
 v1.25 Feb 18 2013
 - added timeouts for tcp streams
 
