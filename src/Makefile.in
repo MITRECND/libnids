@@ -62,7 +62,7 @@ hash_pic.o: hash.c
 
 
 $(LIBSTATIC): $(OBJS)
-	ar -cr $@ $(OBJS)
+	$(AR) -cr $@ $(OBJS)
 	$(RANLIB) $@
 $(LIBSHARED): $(OBJS_SHARED)
 	$(CC) -shared -Wl,-soname,$(LIBSHARED) $(LDFLAGS) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
