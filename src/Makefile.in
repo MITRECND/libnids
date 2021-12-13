@@ -34,31 +34,31 @@ OBJS		= checksum.o ip_fragment.o ip_options.o killtcp.o \
 		  libnids.o scan.o tcp.o util.o allpromisc.o hash.o
 OBJS_SHARED	= $(OBJS:.o=_pic.o)
 .c.o:
-	$(CC) -c $(CFLAGS) -I. $(LIBS_CFLAGS) $<
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) $<
 static: $(LIBSTATIC)
 shared: $(LIBSHARED)
 # How to write the following rules compactly and portably ? 
 # gmake accepts "%_pic.o: %.c", bsd make does not.
 checksum_pic.o: checksum.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c checksum.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c checksum.c -o $@
 ip_fragment_pic.o: ip_fragment.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c ip_fragment.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c ip_fragment.c -o $@
 ip_options_pic.o: ip_options.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c ip_options.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c ip_options.c -o $@
 killtcp_pic.o: killtcp.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c killtcp.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c killtcp.c -o $@
 libnids_pic.o: libnids.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c libnids.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c libnids.c -o $@
 scan_pic.o: scan.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c scan.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c scan.c -o $@
 tcp_pic.o: tcp.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c tcp.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c tcp.c -o $@
 util_pic.o: util.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c util.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c util.c -o $@
 allpromisc_pic.o: allpromisc.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c allpromisc.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c allpromisc.c -o $@
 hash_pic.o: hash.c
-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c hash.c -o $@
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -I. $(LIBS_CFLAGS) -c hash.c -o $@
 
 
 $(LIBSTATIC): $(OBJS)
