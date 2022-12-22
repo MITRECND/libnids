@@ -250,4 +250,12 @@ if test "x"$LIBNET_VER != "x"-1 ; then
 	fi
 fi
 AC_SUBST(LIBNET_VER)
+
+AC_MSG_CHECKING(for SONAME)
+AS_IF([test "x$SONAME" != "x"],
+    [ AC_SUBST(SONAME) ],
+    [ AC_SUBST(SONAME, [libnids.so.1]) ]
+)
+AC_MSG_RESULT("$SONAME")
+
 AC_OUTPUT(Makefile src/Makefile samples/Makefile)
